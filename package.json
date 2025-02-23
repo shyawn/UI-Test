@@ -13,7 +13,8 @@
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "react": "19.0.0",
-    "react-native": "0.78.0"
+    "react-native": "0.78.0",
+    "react-native-swiper-flatlist": "^3.2.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
