@@ -7,6 +7,7 @@ import {
   ScrollView,
   Dimensions,
   StyleSheet,
+  Image,
 } from 'react-native';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
 
@@ -14,14 +15,14 @@ export default function Home() {
   const tickets = [
     {
       title: 'My e-tickets',
-      icon: '',
+      icon: require('../assets/e-ticket.png'),
       description: "There aren't any yet.",
       active: false,
       linkText: 'Retrieve here',
     },
     {
       title: 'Park hours',
-      icon: '',
+      icon: require('../assets/park-hour.png'),
       description: 'Today, 13 Feb 10am - 5pm',
       active: true,
       linkText: 'Plan my visit',
@@ -47,13 +48,9 @@ export default function Home() {
           padding: 20,
           flex: 1,
           justifyContent: 'center',
-          // alignItems: 'center',
         }}>
         <Text
           style={{
-            // position: 'absolute',
-            // bottom: 16,
-            // left: 16,
             fontSize: 20,
             fontWeight: 'bold',
             color: 'white',
@@ -64,14 +61,32 @@ export default function Home() {
         </Text>
       </View>
 
-      <View style={{paddingLeft: 20}}>
+      <View style={{paddingLeft: 10}}>
         <View
           style={{
+            flex: 4,
             flexDirection: 'row',
             marginBottom: 16,
+            flexWrap: 'wrap',
+            // marginHorizontal: 'auto',
+            // alignContent: 'center',
+            // width: 200,
           }}>
-          {['Map', 'Inhabitants', 'Shows', 'Shopping'].map(item => (
-            <TouchableOpacity key={item} style={{alignItems: 'center'}}>
+          {[
+            {title: 'Map', icon: require('../assets/map.png')},
+            {title: 'Inhabitants', icon: require('../assets/fish.png')},
+            {title: 'Shows', icon: require('../assets/movie.png')},
+            {title: 'Shopping', icon: require('../assets/shopping.png')},
+            {title: 'Dine', icon: require('../assets/dining.png')},
+            {title: 'Meet & Greets', icon: require('../assets/meet-greet.png')},
+          ].map(item => (
+            <TouchableOpacity
+              key={item.title}
+              style={{
+                alignItems: 'center',
+                marginHorizontal: 12,
+                marginVertical: 5,
+              }}>
               <View
                 style={{
                   width: 50,
@@ -79,13 +94,17 @@ export default function Home() {
                   backgroundColor: '#eee',
                   borderRadius: 25,
                   marginBottom: 4,
-                }}
-              />
-              <Text>{item}</Text>
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image source={item.icon} style={{width: 22, height: 22}} />
+              </View>
+              <Text>{item.title}</Text>
             </TouchableOpacity>
           ))}
         </View>
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             justifyContent: '',
@@ -105,61 +124,36 @@ export default function Home() {
               <Text>{item}</Text>
             </TouchableOpacity>
           ))}
-        </View>
-
-        {/* <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginBottom: 16,
-        }}>
-        <View
-          style={{
-            flex: 1,
-            padding: 16,
-            backgroundColor: '#f8f8f8',
-            borderRadius: 12,
-            marginRight: 8,
-          }}>
-          <Text style={{fontWeight: 'bold'}}>My e-tickets</Text>
-          <Text>There aren't any yet.</Text>
-          <TouchableOpacity>
-            <Text style={{color: '#007BFF'}}>Retrieve here</Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            padding: 16,
-            backgroundColor: '#f8f8f8',
-            borderRadius: 12,
-            marginLeft: 8,
-          }}>
-          <Text style={{fontWeight: 'bold'}}>Park hours</Text>
-          <Text>Today, 13 Feb 10am - 5pm</Text>
-          <TouchableOpacity>
-            <Text style={{color: '#007BFF'}}>Plan my visit</Text>
-          </TouchableOpacity>
-        </View>
-      </View> */}
-        <SwiperFlatList
-          index={0}
-          showPagination
-          data={tickets}
-          renderItem={({item}) => (
-            <View style={styles.child}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text
-                style={[
-                  item.active ? styles.activeDescription : styles.description,
-                ]}>
-                {item.description}
-              </Text>
-              <Text style={styles.link}>{item.linkText}</Text>
-            </View>
-          )}
-        />
+        </View> */}
       </View>
+      <SwiperFlatList
+        index={0}
+        showPagination={false}
+        data={tickets}
+        style={{paddingLeft: 20, paddingVertical: 10}}
+        renderItem={({item}) => (
+          <View style={styles.child}>
+            <Text style={styles.title}>{item.title}</Text>
+            <Image
+              source={item.icon}
+              style={{
+                position: 'absolute',
+                top: 11,
+                right: 10,
+                width: 22,
+                height: 22,
+              }}
+            />
+            <Text
+              style={[
+                item.active ? styles.activeDescription : styles.description,
+              ]}>
+              {item.description}
+            </Text>
+            <Text style={styles.link}>{item.linkText}</Text>
+          </View>
+        )}
+      />
 
       <View style={{paddingLeft: 20}}>
         <View style={styles.upcomingHeader}>
@@ -176,12 +170,15 @@ export default function Home() {
 
         <SwiperFlatList
           index={0}
-          showPagination
+          showPagination={false}
           data={shows}
           renderItem={({item}) => (
             <View style={styles.showContainer}>
               <View style={styles.timeContainer}>
-                {/* <Image source={}> */}
+                <Image
+                  source={require('../assets/park-hour.png')}
+                  style={{width: 14, height: 14}}
+                />
                 <Text style={styles.timeText}>{item.time}</Text>
               </View>
               <Text style={styles.showTitle}>{item.title}</Text>
@@ -203,9 +200,10 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingVertical: 3,
     marginRight: 13,
-    marginVertical: 20,
+    marginBottom: 20,
     justifyContent: 'center',
-    elevation: 4,
+    elevation: 9,
+    position: 'relative',
   },
   title: {
     fontSize: 12,
@@ -258,14 +256,19 @@ const styles = StyleSheet.create({
     // fontSize: 1,
   },
   timeContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
     padding: 3,
-    borderRadius: 8,
-    maxWidth: 70,
+    borderRadius: 5,
+    gap: 5,
+    maxWidth: 78,
+    maxHeight: 23,
   },
   timeText: {
     fontWeight: 'bold',
     fontSize: 12,
-    // alignSelf: 'flex-start',
   },
 });
